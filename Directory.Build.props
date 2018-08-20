@@ -18,10 +18,11 @@
     <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)build\35MSSharedLib1024.snk</AssemblyOriginatorKeyFile>
 
     <!-- The key doesn't have the private part with it, so we DelaySign when building for CI -->
-    <DelaySign Condition="'$(CI)' == 'true'">true</DelaySign>
-    <SignAssembly Condition="'$(CI)' == 'true'">true</SignAssembly>
-    <DefineConstants Condition="'$(CI)' == 'true' And '$(DefineConstants)' != ''">$(DefineConstants);SIGNED</DefineConstants>
-    <DefineConstants Condition="'$(CI)' == 'true' And '$(DefineConstants)' == ''">SIGNED</DefineConstants>
+    <DelaySign Condition="'$(CI)' == 'true' And '$(DelaySign)' == ''">true</DelaySign>
+    <SignAssembly Condition="'$(CI)' == 'true' And '$(SignAssembly)' == ''">true</SignAssembly>
+
+    <DefineConstants Condition="'$(SignAssembly)' == 'true' And '$(DefineConstants)' != ''">$(DefineConstants);SIGNED</DefineConstants>
+    <DefineConstants Condition="'$(SignAssembly)' == 'true'">SIGNED</DefineConstants>
 
     <AssemblySigningCertName>Microsoft</AssemblySigningCertName>
     <PackageSigningCertName>MicrosoftNuGet</PackageSigningCertName>
@@ -58,4 +59,6 @@
     <!-- Use ProgramFiles32 instead of MSBuildExtensionsPath so we can be built with dotnet.exe -->
     <WAPToolsPath Condition="'$(WAPToolsPath)' == ''">$(VsInstallRoot)\MSBuild\Microsoft\VisualStudio\v$(VisualStudioVersion)</WAPToolsPath>
   </PropertyGroup>
+
+  <Import Project="build\arcade.props" />
 </Project>

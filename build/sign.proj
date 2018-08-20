@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    See https://github.com/dotnet/roslyn-tools/tree/master/src/SignTool for docs on using the sign tool.
+  -->
+
+  <Import Project="$(MSBuildThisFileDirectory)/dependencies.props" />
+
+  <PropertyGroup>
+    <TargetFramework>net452</TargetFramework>
+    <RestorePackagesPath>$(MSBuildThisFileDirectory)..\artifacts\obj\tools\</RestorePackagesPath>
+
+    <CodeSignToolPath>$(RestorePackagesPath)roslyntools.signtool\$(RoslynToolsSignToolPackageVersion)\tools\SignTool.exe</CodeSignToolPath>
+
+    <SignToolOptions Condition="'$(VisualStudioMSBuildx86Path)' != ''">-msbuildPath "$(VisualStudioMSBuildx86Path)"</SignToolOptions>
+    <SignToolOptions Condition="'$(CI)' == 'true' Or '$(SkipSigning)' != 'false'">$(SignToolOptions) -test</SignToolOptions>
+    <SignToolOptions Condition="'$(SignType)' != 'real'">$(SignToolOptions) -testSign</SignToolOptions>
+    <SignToolOptions>$(SignToolOptions) -nugetPackagesPath $(RestorePackagesPath)</SignToolOptions>
+    <SignToolOptions>$(SignToolOptions) -config "$(MSBuildThisFileDirectory)SignToolData.json"</SignToolOptions>
+    <SignToolOptions>$(SignToolOptions) $(ArtifactsConfigurationDir)</SignToolOptions>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MicroBuild.Core" Version="$(MicroBuildCorePackageVersion)" />
+    <PackageReference Include="RoslynTools.SignTool" Version="$(RoslynToolsSignToolPackageVersion)" />
+  </ItemGroup>
+
+  <Target Name="CodeSign">
+    <Exec Command="&quot;$(CodeSignToolPath)&quot; $(SignToolOptions)" />
+  </Target>
+
+</Project>
