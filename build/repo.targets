@@ -55,6 +55,6 @@
     <Target Name="CodeSign" AfterTargets="Package" DependsOnTargets="GetToolsets" Condition=" '$(OS)' == 'Windows_NT' ">
         <MSBuild Projects="$(MSBuildThisFileDirectory)sign.proj"
                 Targets="Restore;CodeSign"
-                Properties="VisualStudioMSBuildx86Path=$(VisualStudioMSBuildx86Path);Configuration=$(Configuration);ArtifactsDir=$(ArtifactsDir)" />
+                Properties="VisualStudioMSBuildx86Path=$(VisualStudioMSBuildx86Path);Configuration=$(Configuration);ArtifactsDir=$(ArtifactsDir);Localize=$(Localize)" />
     </Target>
 </Project>
