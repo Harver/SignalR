@@ -8,4 +8,4 @@ phases:
   parameters:
     queueName: Hosted VS2017
     variables:
-      Foo: bar
+      SkipCodeSign: true
