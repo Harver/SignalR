@@ -4,8 +4,6 @@
     See https://github.com/dotnet/roslyn-tools/tree/master/src/SignTool for docs on using the sign tool.
   -->
 
-  <Import Project="$(MSBuildThisFileDirectory)/dependencies.props" />
-
   <PropertyGroup>
     <TargetFramework>net452</TargetFramework>
     <RestorePackagesPath>$(MSBuildThisFileDirectory)..\artifacts\obj\tools\</RestorePackagesPath>
