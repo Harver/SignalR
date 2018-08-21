@@ -15,9 +15,9 @@
     <SignToolDataFile>$(MSBuildThisFileDirectory)SignToolData.json</SignToolDataFile>
     <SignToolDataFile Condition="'$(Localize)' == 'true'">$(MSBuildThisFileDirectory)SignToolData.Satellite.json</SignToolDataFile>
 
-    <SignToolOptions Condition="'$(VisualStudioMSBuildx86Path)' != ''">-msbuildPath "$(VisualStudioMSBuildx86Path)"</SignToolOptions>
-    <SignToolOptions Condition="'$(CI)' == 'true' Or '$(SkipSigning)' != 'false'">$(SignToolOptions) -test</SignToolOptions>
-    <SignToolOptions Condition="'$(SignType)' != 'real'">$(SignToolOptions) -testSign</SignToolOptions>
+    <SignToolOptions Condition=" '$(VisualStudioMSBuildx86Path)' != '' ">-msbuildPath "$(VisualStudioMSBuildx86Path)"</SignToolOptions>
+    <SignToolOptions Condition=" '$(CI)' != 'true' OR '$(SkipCodeSign)' == 'true' ">$(SignToolOptions) -test</SignToolOptions>
+    <SignToolOptions Condition=" '$(SignType)' == 'test' ">$(SignToolOptions) -testSign</SignToolOptions>
     <SignToolOptions>$(SignToolOptions) -nugetPackagesPath $(RestorePackagesPath)</SignToolOptions>
     <SignToolOptions>$(SignToolOptions) -config "$(SignToolDataFile)"</SignToolOptions>
     <SignToolOptions>$(SignToolOptions) $(ArtifactsConfigurationDir)</SignToolOptions>
